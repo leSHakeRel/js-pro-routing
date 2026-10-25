@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Перенаправление…</title>
+    <script>
+      (function () {
+        var base = '/js-pro-routing';
+        var path = window.location.pathname;
+        if (path.indexOf(base) === 0) {
+          path = path.slice(base.length) || '/';
+        }
+        window.location.replace(base + '/#' + path);
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>

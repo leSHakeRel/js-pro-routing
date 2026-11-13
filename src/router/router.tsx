@@ -1,26 +1,23 @@
+import { createRoot, type Root } from 'react-dom/client';
+import type { ReactNode } from 'react';
 import type { Store } from '../store/store';
 
 const BASE_URL = import.meta.env.BASE_URL;
 
-export interface RenderedPage {
-  element: HTMLElement;
-  cleanup?: () => void;
-}
-
 export interface Page {
   path: string;
   title: string;
-  render: (store: Store) => RenderedPage;
+  component: (props: { store: Store }) => ReactNode;
 }
 
 export interface RouterOptions {
   onNavigate?: (path: string) => void;
 }
 
-/** History API роутер */
+/** History API роутер с рендерингом React-компонентов */
 export class Router {
   private pages: Page[] = [];
-  private currentCleanup: (() => void) | undefined;
+  private root: Root | null = null;
 
   constructor(
     private readonly appRoot: HTMLElement,
@@ -77,18 +74,18 @@ export class Router {
   }
 
   private handleRoute(): void {
-    this.currentCleanup?.();
-    this.currentCleanup = undefined;
-
     const path = this.getCurrentPath();
     const page = this.pages.find((p) => p.path === path) ?? this.notFoundPage();
     document.title = page.title;
 
     this.options.onNavigate?.(path);
 
-    const { element, cleanup } = page.render(this.store);
-    this.currentCleanup = cleanup;
-    this.appRoot.replaceChildren(element);
+    if (!this.root) {
+      this.root = createRoot(this.appRoot);
+    }
+
+    const Component = page.component;
+    this.root.render(<Component store={this.store} />);
   }
 
   private getCurrentPath(): string {
@@ -113,29 +110,16 @@ export class Router {
     return {
       path: '*',
       title: '404 — Страница не найдена',
-      render: () => {
-        const section = document.createElement('section');
-        section.className = 'page not-found';
-
-        const big = document.createElement('div');
-        big.className = 'big';
-        big.textContent = '404';
-
-        const h1 = document.createElement('h1');
-        h1.textContent = 'Страница не найдена';
-
-        const p = document.createElement('p');
-        p.className = 'subtitle';
-        p.textContent = `Путь «${this.getCurrentPath()}» не существует.`;
-
-        const link = document.createElement('a');
-        link.href = '/';
-        link.dataset.link = '';
-        link.className = 'btn btn-primary';
-        link.textContent = 'На главную';
-
-        section.append(big, h1, p, link);
-        return { element: section };
+      component: () => {
+        const currentPath = this.getCurrentPath();
+        return (
+          <section className="page not-found">
+            <div className="big">404</div>
+            <h1>Страница не найдена</h1>
+            <p className="subtitle">Путь «{currentPath}» не существует.</p>
+            <a href="/" data-link className="btn btn-primary">На главную</a>
+          </section>
+        );
       },
     };
   }

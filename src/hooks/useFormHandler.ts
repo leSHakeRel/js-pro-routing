@@ -72,7 +72,18 @@ export function useFormHandler(
 
   const save = (): void => {
     const values = getValues();
-    store.setState(values as Record<string, unknown>);
+    store.setState({
+      user: {
+        name: values.name as string,
+        email: values.email as string,
+        bio: values.bio as string,
+      },
+      settings: {
+        theme: values.theme as 'light' | 'dark',
+        language: values.language as string,
+        notifications: values.notifications as boolean,
+      },
+    });
   };
 
   const reset = (): void => {

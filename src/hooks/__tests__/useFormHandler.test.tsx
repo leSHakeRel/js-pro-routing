@@ -76,9 +76,9 @@ describe('useFormHandler', () => {
       fields: { name: (v) => v.trim(), email: (v) => v.trim() },
     });
     handler.save();
-    const state = store.getState() as unknown as Record<string, unknown>;
-    expect(state.name).toBe('Сохранённый');
-    expect(state.email).toBe('saved@example.com');
+    const state = store.getState();
+    expect(state.user.name).toBe('Сохранённый');
+    expect(state.user.email).toBe('saved@example.com');
   });
 
   it('должен корректно обрабатывать чекбоксы', () => {

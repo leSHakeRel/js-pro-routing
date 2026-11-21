@@ -292,6 +292,106 @@ body {
   color: var(--accent);
 }
 
+/* ── Лог активности ── */
+.log-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.btn-filter {
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.btn-filter:hover {
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+.btn-filter.active {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+}
+
+.log-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.log-row {
+  display: grid;
+  grid-template-columns: 32px 28px 1fr auto auto;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+
+.log-row:hover {
+  background: var(--accent-soft);
+}
+
+.log-num {
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+.log-icon {
+  font-size: 1rem;
+  text-align: center;
+}
+
+.log-desc {
+  font-weight: 500;
+}
+
+.log-type {
+  font-size: 0.8rem;
+  color: var(--muted);
+  background: var(--accent-soft);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.log-time {
+  font-size: 0.8rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.log-empty {
+  color: var(--muted);
+  text-align: center;
+  padding: 24px;
+}
+
+/* ── Ошибки формы ── */
+.form-errors {
+  color: #dc2626;
+  font-size: 0.85rem;
+  margin: 0;
+  padding-left: 20px;
+}
+
+.form-errors li {
+  margin-bottom: 4px;
+}
+
 /* ── Адаптивность ── */
 @media (max-width: 640px) {
   .app-header {

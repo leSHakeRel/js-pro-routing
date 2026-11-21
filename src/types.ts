@@ -37,6 +37,10 @@ export interface ActionLogEntry {
 }
 
 export interface AppState {
+  /** Текущий активный раздел/маршрут */
+  currentSection: string | null;
+  /** Флаг восстановления сессии из persist-слоя */
+  sessionRestored: boolean;
   user: UserProfile;
   settings: AppSettings;
   stats: AppStats;
@@ -46,6 +50,8 @@ export interface AppState {
 
 /** Дефолтное состояние */
 export const DEFAULT_STATE: AppState = {
+  currentSection: null,
+  sessionRestored: false,
   user: {
     name: 'Гость',
     email: '',

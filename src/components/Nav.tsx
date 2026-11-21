@@ -1,4 +1,7 @@
+import { Link } from 'react-router';
 import type { ReactNode } from 'react';
+import type { Store } from '../store/store';
+import { useStore } from '../hooks/useStoreSubscription';
 
 const LINKS: ReadonlyArray<{ path: string; label: string }> = [
   { path: '/', label: 'Главная' },
@@ -9,19 +12,22 @@ const LINKS: ReadonlyArray<{ path: string; label: string }> = [
   { path: '/activity-log', label: 'Лог' },
 ];
 
-/** React-компонент навигации */
-export function Nav({ activePath }: { activePath?: string }): ReactNode {
+/**
+ * React-компонент навигации.
+ */
+export function Nav({ store }: { store: Store }): ReactNode {
+  const { currentSection } = useStore(store);
+
   return (
     <nav className="nav">
       {LINKS.map(({ path, label }) => (
-        <a
+        <Link
           key={path}
-          href={path}
-          data-link=""
-          className={path === activePath ? 'active' : ''}
+          to={path}
+          className={path === currentSection ? 'active' : ''}
         >
           {label}
-        </a>
+        </Link>
       ))}
     </nav>
   );

@@ -7,7 +7,9 @@ import { Card, Row, Stat } from '../components/ui';
 function formatDate(iso: string): string {
   if (!iso) return '—';
   const date = new Date(iso);
-  return Number.isNaN(date.getTime()) ? '—' : date.toLocaleString('ru-RU');
+  return Number.isNaN(date.getTime())
+    ? '—'
+    : date.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' });
 }
 
 /**

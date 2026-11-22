@@ -25,7 +25,7 @@ export function ContactDetailPage({ store }: { store: Store }): ReactNode {
         <>
           <Row label="Email" value={contact.email} />
           <Row label="Сообщение" value={contact.message} />
-          <Row label="Отправлено" value={new Date(contact.timestamp).toLocaleString('ru-RU')} />
+          <Row label="Отправлено" value={new Date(contact.timestamp).toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' })} />
         </>
       ) : (
         <p className="note">

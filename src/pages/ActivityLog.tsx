@@ -21,7 +21,7 @@ const ACTION_ICONS: Record<ActionType, string> = {
 
 function formatTimestamp(iso: string): string {
   try {
-    return new Date(iso).toLocaleString('ru-RU');
+    return new Date(iso).toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' });
   } catch {
     return iso;
   }
